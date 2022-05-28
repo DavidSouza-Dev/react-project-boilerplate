@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { memo, useContext } from 'react'
+import { Context } from '../../provider/context'
 
-const Main = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src="logo.svg" className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
-)
+const Main = () => {
+  const { getAllJobs } = useContext(Context)
 
-export default Main
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src="logo.svg" className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+        <button onClick={() => getAllJobs()}>CLICK</button>
+      </header>
+    </div>
+  )
+}
+
+export default memo(Main)
