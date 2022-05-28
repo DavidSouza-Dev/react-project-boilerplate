@@ -1,16 +1,24 @@
-import styled from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
-export const GlobalStyles = styled.div`
+export const GlobalStyle = createGlobalStyle`
   :root {
-    --highlight: #f5850b;
-    --background: white;
-    --black: #000;
+    --background: #F0F2F5;
+    --shape: #FFFFFF;
+    --onHoverBackground: #ffffff1f;
 
-    --container: 100rem;
+    --red: #e52e4d;
+    --blue: #5429CC;
+    --green: #33cc95;
+    --blue-ligth: #6933FF;
 
-    --small: 1.5rem;
-    --medium: 3rem;
-    --large: 5rem;
+    --text-title: #363F5F;
+    --text-body: #969CB3;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
   * {
     font-family: DM Sans, sans-serif;
@@ -18,7 +26,7 @@ export const GlobalStyles = styled.div`
     padding: 0;
     box-sizing: border-box;
   }
-
+  
   p,
   a {
     font-size: 2rem;
