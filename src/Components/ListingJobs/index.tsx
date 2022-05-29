@@ -1,14 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Context } from '../../provider/context'
-import BtnHandle from '../BtnHandle'
+import { useLocation } from 'react-router-dom'
+
 import * as S from './styles'
+import BtnHandle from '../BtnHandle'
 
 const ListingJobs = () => {
-  const { getAllJobs, allJobs } = useContext(Context)
-
-  /*  useEffect(() => {
-    getAllJobs()
-  }, []) */
+  const { allJobs } = useContext(Context)
+  const { pathname } = useLocation()
+  const renderAll =
+    pathname.includes('Entrevistador') || pathname.includes('Candidato')
+  const recruiterPage = pathname.includes('Recrutador')
 
   const setStatus = (status: string) => {
     return status === 'draft' ? 'Pronto para Publicar' : 'Publicado'
@@ -17,19 +19,38 @@ const ListingJobs = () => {
   if (!allJobs) return null
 
   return (
-    <S.Wrapper>
-      {allJobs.data.map(({ id, name, status }: any) => (
-        <div className="jobbox" key={id}>
-          <div>
-            <div className="jobbox--title">{name}</div>
-            <div className="jobbox--status">
-              {`Status: ${setStatus(status)}`}
+    <S.Container>
+      {allJobs.data.map(({ id, name, status }: any) => {
+        if (renderAll && status !== 'draft')
+          return (
+            <div className="job-item" key={id}>
+              <div>
+                <div className="job-item--title">
+                  <b> {name}</b>
+                </div>
+                <div className="job-item--status">
+                  {`Status: ${setStatus(status)}`}
+                </div>
+              </div>
+              {<BtnHandle jobID={id} />}
             </div>
-            {status === 'draft' && <BtnHandle id={id} />}
-          </div>
-        </div>
-      ))}
-    </S.Wrapper>
+          )
+        if (recruiterPage)
+          return (
+            <div className="job-item" key={id}>
+              <div>
+                <div className="job-item--title">
+                  <b> {name}</b>
+                </div>
+                <div className="job-item--status">
+                  {`Status: ${setStatus(status)}`}
+                </div>
+              </div>
+              {status === 'draft' && <BtnHandle jobId={id} />}
+            </div>
+          )
+      })}
+    </S.Container>
   )
 }
 
