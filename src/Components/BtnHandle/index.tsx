@@ -1,25 +1,41 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../provider/context'
 import { useLocation } from 'react-router-dom'
-// import * as S from './styles'
+import * as S from './styles'
 
-const BtnHandle = ({ id }: any) => {
-  const { createJob, getAllJobs, allJobs, publishJob } = useContext(Context)
+const BtnHandle = ({ jobID }: any) => {
+  const { user, applyToJob, publishJob, getJobApplications } =
+    useContext(Context)
   const [recruiterPage, SetRecruiterPage] = useState(false)
   const [candidatePage, SetCandidatePage] = useState(false)
   const [interviewerPage, SetInterviewerPage] = useState(false)
   const { pathname } = useLocation()
-  useEffect(() => {
-    SetRecruiterPage(pathname.includes('Candidato'))
-    SetCandidatePage(pathname.includes('Entrevistador'))
-    SetInterviewerPage(pathname.includes('Recrutador'))
-  }, [])
 
-  const handleBtnJob = () => {
-    if (recruiterPage) publishJob(id)
+  const setLabel = (label: string) => {
+    return {
+      Recrutador: 'Enviar',
+      Candidato: 'Aplicar',
+      Entrevistador: 'Ver Aplicações'
+    }[label]
   }
 
-  return <button onClick={() => handleBtnJob()}>Enviar</button>
+  useEffect(() => {
+    SetRecruiterPage(pathname.includes('Recrutador'))
+    SetCandidatePage(pathname.includes('Candidato'))
+    SetInterviewerPage(pathname.includes('Entrevistador'))
+  })
+
+  const handleBtnJob = () => {
+    if (recruiterPage) publishJob(jobID)
+    if (candidatePage) applyToJob({ jobID, id: user?.userData?.id })
+    if (interviewerPage) getJobApplications(jobID)
+  }
+
+  return (
+    <S.Button onClick={() => handleBtnJob()}>
+      {setLabel(pathname.replace('/', ''))}
+    </S.Button>
+  )
 }
 
 export default BtnHandle
