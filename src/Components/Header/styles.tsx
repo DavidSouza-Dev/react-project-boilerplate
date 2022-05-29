@@ -24,7 +24,8 @@ export const Content = styled.div`
     text-decoration: none;
     line-height: 3;
     margin: 0.3rem 0;
-    &:hover {
+    &:hover,
+    &.active {
       filter: brightness(0.9);
       background: var(--onHoverBackground);
     }
