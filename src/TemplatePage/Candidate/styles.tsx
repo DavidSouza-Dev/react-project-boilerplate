@@ -9,7 +9,12 @@ export const Wrapper = styled.section`
   width: 350px;
   padding: 3rem 0 0 0;
 `
-export const Heading = styled.h2`
+export const Title = styled.h2`
+  margin-bottom: 1rem;
+  width: 100%;
+  text-align: center;
+`
+export const Heading = styled.h3`
   margin-bottom: 1rem;
 `
 export const Form = styled.form`

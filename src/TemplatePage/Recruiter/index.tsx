@@ -1,18 +1,17 @@
-import React, { memo, useContext } from 'react'
-import { Context } from '../../provider/context'
+import React, { memo } from 'react'
+import ListingJobs from '../../Components/ListingJobs'
 import FormVaga from './FormJob'
-import ListingJobs from '../ListingJobs'
 import * as S from './styles'
 
 const Recruiter = () => {
-  const { getAllJobs } = useContext(Context)
-
   return (
     <main className="new-job">
       <S.Wrapper>
+        <S.Title>Área do Recrutador</S.Title>
+
         <S.Container>
           <div>
-            <h2>Cadastrar Vaga</h2>
+            <h3>Cadastrar Vaga</h3>
           </div>
           <div className="new-job--form">
             <FormVaga />
