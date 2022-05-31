@@ -8,12 +8,14 @@ import { TdataUser } from '../../types'
 import * as S from './styles'
 
 const Candidate = () => {
-  const { createUser, user } = useContext(Context)
+  const { createUser, user, errorForm } = useContext(Context)
   const { register, handleSubmit } = useForm()
   const history = useNavigate()
 
+  /**
+   * @comentary Controi a partir do hook-form um objeto feito a partir dos inputs
+   */
   const handleData = (data: TdataUser) => {
-    console.log(data)
     createUser(data)
     history('/Candidato')
   }
@@ -32,6 +34,7 @@ const Candidate = () => {
       <S.Title>Área do Candidato</S.Title>
       <S.Heading>Faça Seu Cadastro</S.Heading>
       <S.Form
+        data-testid="form-register"
         aria-label="Se cadastre no sistema"
         className="register--form"
         action="#"
@@ -54,6 +57,13 @@ const Candidate = () => {
           aria-label="Insira aqui um password para se cadastrar"
         />
         <S.Button type="submit">Cadastrar</S.Button>
+        {errorForm[0] !== '' && (
+          <S.Errors data-testid="message-erros">
+            {errorForm.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </S.Errors>
+        )}
       </S.Form>
     </S.Wrapper>
   )
