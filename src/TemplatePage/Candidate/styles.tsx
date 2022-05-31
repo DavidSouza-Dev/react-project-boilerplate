@@ -22,6 +22,17 @@ export const Form = styled.form`
   padding: 1rem;
   border-radius: 10px;
 `
+export const Errors = styled.ul`
+  padding: 1rem 1rem 1rem 2rem;
+  border-radius: 10px;
+  background: var(--backgroundListOptions);
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  li {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+`
 
 export const Button = styled.button`
   margin: 1rem auto auto;
