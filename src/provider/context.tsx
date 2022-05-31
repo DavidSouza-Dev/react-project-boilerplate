@@ -1,107 +1,146 @@
 import axios from 'axios'
 import React, { createContext, useEffect, useState } from 'react'
-import { nodeChildren } from '../types'
+import {
+  nodeChildren,
+  TapplyJob,
+  Tcontext,
+  TdataUser,
+  TjobAplications
+} from '../types'
 
-export const Context = createContext({} as any)
+export const Context = createContext({} as Tcontext)
 
 const Provider = ({ children }: nodeChildren) => {
   const baseUrl = process.env.REACT_APP_BASEURL
   const version = process.env.REACT_APP_VERSION
   const [allJobs, setAllJobs] = useState()
-  const [userData, setUser] = useState({
+  const [errorForm, setErrorForm] = useState<string[]>([''])
+  const [user, setUser] = useState({
     userData: null,
     logged: false
   })
-  const [jobAplications, setJobAplications] = useState()
+  const [jobAplications, setJobAplications] = useState<
+    TjobAplications[] | undefined
+  >(undefined)
 
+  /**
+   * @comentary Essa função faz leitura de todas as vagas
+   * @returns
+   */
   const getAllJobs = async () => {
-    console.log(`${baseUrl}/${version}/jobs/list-all-jobs`)
     const data = await axios
       .get(`${baseUrl}/${version}/jobs/list-all-jobs`)
       .then(({ data }) => data)
       .catch((error) => {
-        console.log('Error: ', error)
+        console.log('Error on getAll Jobs: ', error)
       })
     setAllJobs(data)
   }
 
-  //cadastro de usuário { name: any; email: any; password: any }
-  const createUser = async (user: any) => {
-    const { data: data } = await axios
+  /**
+   * @comentary Essa função faz cadastro de usuário
+   * @returns
+   */
+  const createUser = async (user: TdataUser) => {
+    const { data } = await axios
       .post(`${baseUrl}/${version}/accounts/create-account`, {
         name: user.name,
         email: user.email,
         password: user.password
       })
-      .then((res) => res)
-      .catch((error) => error.res)
+      .then((response) => response)
+      .catch((error) => {
+        setErrorForm(error.response.data.message)
+        return error
+      })
 
     setUser({
-      userData: data,
-      logged: false
+      userData: data.data,
+      logged: true
     })
   }
 
-  // aplicação do usuário a uma vaga
-  const applyToJob = async (data: any) => {
+  /**
+   * @comentary Essa função faz  aplicação do usuário a uma vaga
+   * @returns
+   */
+  const applyToJob = async (data: TapplyJob) => {
     await axios
-      .post(`${baseUrl}/${version}/jobs/apply/${data.jobId}`, {
+      .post(`${baseUrl}/${version}/jobs/apply/${data.jobID}`, {
         accountId: data.id
       })
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error.res))
+      .then((response) => response)
+      .catch((error) => {
+        alert('Operação não realizada, repita ação.')
+        console.log('Error:', error)
+      })
 
     getAllJobs()
   }
 
-  // cria uma vaga nova
-  const createJob = async (jobTitle: any) => {
+  /**
+   * @comentary Essa função cria uma vaga nova
+   * @returns
+   */
+  const createJob = async (jobTitle: string) => {
     await axios
       .post(`${baseUrl}/${version}/jobs/create-job`, {
         name: jobTitle
       })
-      .then((res) => {
-        console.log(res)
-      })
+      .then((response) => response)
       .catch((error) => {
-        console.log('Error: ', error)
+        alert('Operação não realizada, repita ação.')
+        console.log('Error:', error)
       })
 
     getAllJobs()
   }
 
-  // publica a vaga
-  const publishJob = async (jobId: any) => {
+  /**
+   * @comentary Essa função publica a vaga
+   * @returns
+   */
+  const publishJob = async (jobId: number) => {
     await axios
       .patch(`${baseUrl}/${version}/jobs/publish-job/${jobId}`)
-      .then((res) => res)
+      .then((response) => response)
       .catch((error) => {
-        console.log('Error: ', error)
+        alert('Operação não realizada, repita ação.')
+        console.log('Error:', error)
       })
 
     getAllJobs()
   }
 
-  // consome todas as aplicações de uma vaga
-  const getJobApplications = async (jobId: any) => {
+  /**
+   * @comentary Essa função leitura de todas as aplicações de uma vaga
+   * @returns
+   */
+  const getJobApplications = async (jobId: number) => {
+    setJobAplications([])
     const data = await axios
       .get(`${baseUrl}/${version}/jobs/view-applications/${jobId}`)
       .then(({ data }) => data)
       .catch((error) => {
-        console.log('Error: ', error)
+        alert('Operação não realizada, repita ação.')
+        console.log('Error:', error)
       })
+
+    console.log('setJobAplications', data.data)
 
     setJobAplications(data.data)
   }
 
   useEffect(() => {
-    console.log('allJobs', allJobs)
-  }, [allJobs])
+    getAllJobs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Context.Provider
       value={{
-        userData,
+        errorForm,
+        user,
         allJobs,
         jobAplications,
         getAllJobs,
