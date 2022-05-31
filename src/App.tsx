@@ -1,12 +1,12 @@
 import React from 'react'
 
-import Main from './Components/Main'
+import Router from './Routes/routes'
 import { GlobalStyle } from './styles/global'
 
 function App() {
   return (
     <>
-      <Main />
+      <Router />
       <GlobalStyle />
     </>
   )
