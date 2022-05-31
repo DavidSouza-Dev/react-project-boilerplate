@@ -5,6 +5,8 @@ export const GlobalStyle = createGlobalStyle`
     --background: #F0F2F5;
     --shape: #FFFFFF;
     --onHoverBackground: #ffffff1f;
+    --borderColor: #0000000f;
+    --backgroundListOptions: #f4f3f6;
 
     --red: #e52e4d;
     --blue: #5429CC;
@@ -49,6 +51,7 @@ export const GlobalStyle = createGlobalStyle`
     transition: all 0.4s;
     border-radius: 0;
     outline: none;
+    margin-bottom: 1rem;
     &:hover {
       box-shadow: unset;
       border: 1px solid transparent;
@@ -68,44 +71,5 @@ export const GlobalStyle = createGlobalStyle`
   label,
   input {
     cursor: pointer;
-  }
-
-  .App {
-    text-align: center;
-  }
-
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
-  }
-
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-
-  .App-link {
-    color: #61dafb;
-  }
-
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
   }
 `
