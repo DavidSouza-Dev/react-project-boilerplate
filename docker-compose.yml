@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  react-project:
+    container_name: react-project
+    build:
+      context: "."
+      dockerfile: Dockerfile.dev
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 3G
+    restart: always
+    working_dir: "/app/"
+    ports:
+      - 3003:3003
+    volumes:
+      - ./:/app/
+    command: sh -c "npm install && npm start"

@@ -1,0 +1,24 @@
+# Use a specific Node.js version
+FROM node:20.11.1-alpine AS builder
+
+WORKDIR /app
+
+# Copy package.json and other relevant package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Switch to a clean image for the final container
+FROM node:20.11.1-alpine
+
+WORKDIR /app
+
+# Copy the entire project directory
+COPY . .
+
+# Expose port for development server (adjust if needed)
+EXPOSE 3003
+
+# Start the development server
+CMD [ "npm",  "start" ]  # Adjust if your start command is different
