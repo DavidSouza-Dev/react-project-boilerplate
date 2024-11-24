@@ -1,5 +1,9 @@
-name: DevOps-GitHibActions
-on: push
+name: Deploy to GitHub Actions
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   # Build Job
   build:
@@ -21,7 +25,7 @@ jobs:
           name: production-files
           path: ./build
 
-           # Deploy Job
+  # Deploy Job
   deploy:
     # Add a dependency to the build job
     needs: build
