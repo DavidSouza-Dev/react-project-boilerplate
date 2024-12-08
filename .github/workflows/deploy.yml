@@ -1,8 +1,11 @@
 name: Deploy to GitHub Actions
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: environment to deploy
+        required: true
 
 jobs:
   # Build Job
