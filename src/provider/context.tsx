@@ -5,10 +5,6 @@ import { nodeChildren, Tcontext } from '../types'
 export const Context = createContext({} as Tcontext)
 
 const Provider = ({ children }: nodeChildren) => {
-  // const baseUrl = process.env.REACT_APP_BASEURL
-  // const version = process.env.REACT_APP_VERSION
-
-  // Fetch user data from API or local storage
   const [userData, setUserData] = useState(null)
 
   useEffect(() => {
