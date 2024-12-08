@@ -1,11 +1,18 @@
-name: Flow - Deploy Production
+name: Deploy Production
 
 on:
   push:
     branches:
       - master
+      
   workflow_dispatch:
-  
+
+permissions:
+  contents: read
+  id-token: write
+  actions: read
+  issues: write
+
 jobs:
   deploy:
     uses: ./.github/workflows/deploy.yml
