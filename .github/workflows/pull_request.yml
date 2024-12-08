@@ -16,3 +16,19 @@ jobs:
       - name: Build Project
         run: npm run build
       - run: npm run test
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: production-files
+          path: ./build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.BOILERPLATE_GH_PAGES }}
+          publish_dir: ./build
