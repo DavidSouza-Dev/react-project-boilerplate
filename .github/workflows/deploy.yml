@@ -4,8 +4,7 @@ on:
     inputs:
       environment:
         type: string
-        description: environment to deploy
-        required: true
+        description: "production"
 
 jobs:
   # Build Job
