@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - master
+      
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  actions: read
+  issues: write
 
 jobs:
   deploy:
