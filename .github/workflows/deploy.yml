@@ -22,17 +22,38 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Node.js
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Adjust to your preferred Node.js version
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/deploy-pages@v4
+         node-version: '20.x'
+      - name: Install Dependencies
+        run: npm install
+      - name: Build Project
+        run: npm run build
+      - name: Upload artifact to enable deployment
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          folder: build
+          name: production-files
+          path: ./build
+
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: production-files
+          path: ./build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.BOILERPLATE_GH_PAGES }}
+          publish_dir: ./build
