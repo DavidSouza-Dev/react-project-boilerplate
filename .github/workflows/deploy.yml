@@ -1,8 +1,10 @@
 name: Deploy to GitHub Actions
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: "production"
 
 jobs:
   # Build Job
