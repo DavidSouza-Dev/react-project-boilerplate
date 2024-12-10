@@ -43,5 +43,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
         with: 
-          token: ${{ secrets.BOILERPLATE_GH_PAGES }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           artifact_name: 'github-pages'
