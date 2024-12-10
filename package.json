@@ -2,7 +2,7 @@
   "name": "react-project",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://davidsouza-dev.github.io/",
+  "homepage": "https://davidsouza-dev.github.io/react-project-boilerplate/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
